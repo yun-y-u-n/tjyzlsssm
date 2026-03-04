@@ -386,8 +386,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>🏛️ 天津一中历史社宗庙 🏛️</h1>
-        <p class="subtitle">承大唐三百年国祚，敬列祖列宗威灵</p>
+        <h1> 天津一中历史社宗庙 </h1>
+        <p class="subtitle">社虽旧制，其命惟新。往者不谏，来者可追。冀我社人，鉴史明心，踵事增华，永续辉光。</p>
         
         <!-- 信息面板 -->
         <div class="info-panel">
@@ -524,7 +524,6 @@
             
             renderTablets();
             bindSacrificeClick();
-            loadLocalData();
             updateUI();
             updateIntroPanel();
             checkSignStatus();
@@ -579,8 +578,6 @@
 
             // 选中后自动更新简介面板
             updateIntroPanel();
-            // 保存数据到本地
-            saveData();
             // 更新页面UI
             updateUI();
         }
@@ -638,8 +635,6 @@
                 favor: parseInt(element.dataset.favor) || 0,
                 name: element.querySelector('.sacrifice-name').textContent
             };
-            // 保存数据并更新UI
-            saveData();
             updateUI();
         }
 
@@ -665,42 +660,8 @@
             // 4. 更新页面UI（比如祭拜按钮变灰）
             updateUI();
 
-            // 5. 保存数据到本地存储
-            saveData();
-
             // 6. 给用户一个简单的提示
             showBlessing('已清空选中的社长与祭品，请重新择选。');
-        }
-
-        // 加载本地存储数据
-        function loadLocalData() {
-            const savedData = localStorage.getItem('tangAncestralHallData');
-            if (savedData) {
-                try {
-                    const parsed = JSON.parse(savedData);
-                    // 兼容旧数据，确保选中的帝王一定是数组
-                    gameData = {
-                        favorability: parsed.favorability || 0,
-                        lastSignDate: parsed.lastSignDate || '',
-                        selectedEmperors: Array.isArray(parsed.selectedEmperors) ? parsed.selectedEmperors : [],
-                        selectedSacrifice: parsed.selectedSacrifice || null
-                    };
-                } catch (e) {
-                    console.error('数据加载失败，已重置', e);
-                    // 数据出错就重置
-                    gameData = {
-                        favorability: 0,
-                        lastSignDate: '',
-                        selectedEmperors: [],
-                        selectedSacrifice: null
-                    };
-                }
-            }
-        }
-
-        // 保存数据到本地存储
-        function saveData() {
-            localStorage.setItem('tangAncestralHallData', JSON.stringify(gameData));
         }
 
         // 更新页面UI显示
@@ -741,7 +702,6 @@
             gameData.lastSignDate = today;
             gameData.favorability += 10;
             // 保存数据并更新页面
-            saveData();
             updateUI();
             checkSignStatus();
             showBlessing(`签到成功！获赠太牢之礼，社长好感度+10！\n\n心诚则灵，恭请择选社长与祭祀贡品，即可上香祭拜。`);
@@ -765,7 +725,6 @@
             const probability = Math.min(baseProbability + (gameData.favorability / 600), maxProbability);
 
             // 保存数据并更新页面
-            saveData();
             updateUI();
 
             // 生成祭拜结果文本
@@ -809,4 +768,5 @@
 </body>
 
 </html>
+
 
