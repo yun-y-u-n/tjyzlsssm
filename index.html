@@ -411,16 +411,16 @@
 
         <!-- 帝王灵位区 -->
         <div class="ancestral-hall">
-            <h2 class="hall-title">大唐列祖列宗灵位</h2>
-            <p style="opacity:0.8; margin-bottom:1rem;">点击灵位可多选，再次点击取消选中</p>
+            <h2 class="hall-title">历任社长</h2>
+            <p style="opacity:0.8; margin-bottom:1rem;">点击可多选，再次点击取消选中</p>
             <div class="spirit-tablets" id="tabletsContainer"></div>
         </div>
 
         <!-- 选中帝王简介展示区 -->
         <div class="intro-section" id="introSection">
-            <h2 class="section-title">选中先王简介</h2>
+            <h2 class="section-title">选中社长主要贡献</h2>
             <div class="intro-container" id="introContainer">
-                <p class="empty-tip">请择选先王灵位，即可查看其生平简介</p>
+                <p class="empty-tip">请择选社长，即可查看其主要贡献</p>
             </div>
         </div>
 
@@ -429,22 +429,18 @@
             <h2 class="section-title">选择祭祀贡品</h2>
             <div class="sacrifice-options">
                 <div class="sacrifice-option" data-value="tailao" data-favor="15">
-                    <img src="https://picsum.521120.xyz/id/488/400/300" alt="太牢之礼" class="sacrifice-img" onerror="this.src='https://picsum.521120.xyz/id/237/400/300'">
                     <div class="sacrifice-name">太牢之礼</div>
                     <div class="sacrifice-desc">牛、羊、豕三牲全备，帝王祭祀最高礼</div>
                 </div>
                 <div class="sacrifice-option" data-value="shaolao" data-favor="10">
-                    <img src="https://picsum.521120.xyz/id/139/400/300" alt="少牢之礼" class="sacrifice-img" onerror="this.src='https://picsum.521120.xyz/id/102/400/300'">
                     <div class="sacrifice-name">少牢之礼</div>
                     <div class="sacrifice-desc">羊、豕二牲，诸侯卿大夫祭祀礼</div>
                 </div>
                 <div class="sacrifice-option" data-value="grain" data-favor="5">
-                    <img src="https://picsum.521120.xyz/id/493/400/300" alt="五谷之礼" class="sacrifice-img" onerror="this.src='https://picsum.521120.xyz/id/292/400/300'">
                     <div class="sacrifice-name">五谷之礼</div>
                     <div class="sacrifice-desc">稻、黍、稷、麦、菽，民生之本</div>
                 </div>
                 <div class="sacrifice-option" data-value="jade" data-favor="8">
-                    <img src="https://picsum.521120.xyz/id/1048/400/300" alt="玉帛之礼" class="sacrifice-img" onerror="this.src='https://picsum.521120.xyz/id/152/400/300'">
                     <div class="sacrifice-name">玉帛之礼</div>
                     <div class="sacrifice-desc">瑞玉、束帛，祭祀之瑞器</div>
                 </div>
@@ -464,7 +460,6 @@
         const emperors = [
             {
                 templeName: "高祖",
-                posthumousName: "神尧大圣大光孝皇帝",
                 name: "彭宇程",
                 reign: "2022~2023",
                 avatar: "https://picsum.521120.xyz/id/1005/100/130",
@@ -472,7 +467,6 @@
             },
             {
                 templeName: "太宗",
-                posthumousName: "文武大圣大广孝皇帝",
                 name: "李治衡",
                 reign: "2023~2024",
                 avatar: "https://picsum.521120.xyz/id/1012/100/130",
@@ -480,7 +474,6 @@
             },
             {
                 templeName: "高宗",
-                posthumousName: "天皇大圣大弘孝皇帝",
                 name: "安登宸",
                 reign: "2024~2025",
                 avatar: "https://picsum.521120.xyz/id/1074/100/130",
@@ -529,17 +522,11 @@
             document.getElementById('clearBtn').addEventListener('click', clearSelection);
             document.getElementById('worshipBtn').addEventListener('click', worship);
             
-            // 生成帝王灵位
             renderTablets();
-            // 绑定祭品点击事件
             bindSacrificeClick();
-            // 加载本地存储的历史数据
             loadLocalData();
-            // 更新页面显示
             updateUI();
-            // 更新简介面板
             updateIntroPanel();
-            // 检查今日签到状态
             checkSignStatus();
         });
 
@@ -820,4 +807,5 @@
         }
     </script>
 </body>
+
 </html>
