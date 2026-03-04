@@ -392,7 +392,7 @@
         <!-- 信息面板 -->
         <div class="info-panel">
             <div class="info-item">
-                <div class="info-label">先王好感度</div>
+                <div class="info-label">社长好感度</div>
                 <div class="info-value" id="favorability">0</div>
             </div>
             <div class="info-item">
@@ -418,9 +418,9 @@
 
         <!-- 选中帝王简介展示区 -->
         <div class="intro-section" id="introSection">
-            <h2 class="section-title">选中社长主要贡献</h2>
+            <h2 class="section-title">选中社长主要功绩</h2>
             <div class="intro-container" id="introContainer">
-                <p class="empty-tip">请择选社长，即可查看其主要贡献</p>
+                <p class="empty-tip">请择选社长，即可查看其主要功绩</p>
             </div>
         </div>
 
@@ -445,12 +445,12 @@
                     <div class="sacrifice-desc">瑞玉、束帛，祭祀之瑞器</div>
                 </div>
             </div>
-            <button class="btn" id="worshipBtn" disabled>一键祭拜选中先王</button>
+            <button class="btn" id="worshipBtn" disabled>一键祭拜选中社长</button>
         </div>
 
         <!-- 祝福展示区 -->
         <div class="blessing-box" id="blessingBox">
-            <div class="blessing-text" id="blessingText">恭请先择选先王灵位，再挑选祭祀贡品，即可上香祭拜，获先王赐福</div>
+            <div class="blessing-text" id="blessingText">恭请先择选社长，再挑选祭祀贡品，即可上香祭拜，获社长赐福</div>
         </div>
     </div>
 
@@ -462,22 +462,22 @@
                 templeName: "高祖",
                 name: "彭宇程",
                 reign: "2022~2023",
-                avatar: "https://picsum.521120.xyz/id/1005/100/130",
-                intro: "唐朝开国皇帝，出身关陇世家，隋末于晋阳起兵反隋，618年正式建立唐朝，先后平定四方割据势力，统一全国，奠定了大唐三百年的基业。"
+                avatar: "",
+                intro: "联合骨干创立历史社，完成首轮纳新，汇聚 108 名成员；创办社团公众号，借义卖、百团大战打响社团知名度，开创跨校论史活动。"
             },
             {
                 templeName: "太宗",
                 name: "李治衡",
                 reign: "2023~2024",
-                avatar: "https://picsum.521120.xyz/id/1012/100/130",
-                intro: "唐朝第二位皇帝，通过玄武门之变登基，开创了史上著名的「贞观之治」。在位期间虚心纳谏、轻徭薄赋、平定四方外患，被周边部族尊为「天可汗」，是中国历史上公认的千古明君。"
+                avatar: "",
+                intro: "接任后搭建官方纳新群与 QQ 社群，完成新一轮纳新扩充社团规模；百团大战策划三国情景剧大幅提升社团声量，打造爆款历史主题文创，义卖成果丰硕。"
             },
             {
                 templeName: "高宗",
                 name: "安登宸",
                 reign: "2024~2025",
-                avatar: "https://picsum.521120.xyz/id/1074/100/130",
-                intro: "唐太宗第九子，在位期间延续贞观国策，开创「永徽之治」，先后攻灭西突厥、百济、高句丽，将唐朝的版图拓展到鼎盛。后期与武则天共同临朝理政，史称「二圣临朝」。"
+                avatar: "",
+                intro: "完成巡班宣化与纳新工作，吸纳新生力量；创新推出商鞅变法魔方文创，延续义卖特色充实社费；常态化举办历史主题研讨，营造浓厚研史氛围。"
             },
         ];
 
@@ -592,7 +592,7 @@
 
             // 情况1：没有选中任何帝王，显示空提示
             if (selectedEmperors.length === 0) {
-                introContainer.innerHTML = `<p class="empty-tip">请择选先王灵位，即可查看其生平简介</p>`;
+                introContainer.innerHTML = `<p class="empty-tip">请择选社长，即可查看其主要功绩</p>`;
                 return;
             }
 
@@ -643,7 +643,7 @@
             updateUI();
         }
 
-        // 【新增核心功能】一键清空选中内容
+        // 一键清空选中内容
         function clearSelection() {
             // 1. 清空数据：选中的帝王数组和祭品
             gameData.selectedEmperors = [];
@@ -669,7 +669,7 @@
             saveData();
 
             // 6. 给用户一个简单的提示
-            showBlessing('已清空选中的先王与祭品，请重新择选。');
+            showBlessing('已清空选中的社长与祭品，请重新择选。');
         }
 
         // 加载本地存储数据
@@ -710,7 +710,7 @@
             document.getElementById('lastSign').textContent = gameData.lastSignDate || '未签到';
             // 更新选中帝王的显示，显示选中的数量
             document.getElementById('selectedEmperor').textContent = gameData.selectedEmperors.length > 0 
-                ? `已选${gameData.selectedEmperors.length}位先王` 
+                ? `已选${gameData.selectedEmperors.length}位社长` 
                 : '未选择';
             
             // 祭拜按钮启用逻辑：至少选中1位帝王 + 选中祭品，才能点击
@@ -744,14 +744,14 @@
             saveData();
             updateUI();
             checkSignStatus();
-            showBlessing(`签到成功！获赠太牢之礼，先王好感度+10！\n\n心诚则灵，恭请择选先王灵位与祭祀贡品，即可上香祭拜。`);
+            showBlessing(`签到成功！获赠太牢之礼，社长好感度+10！\n\n心诚则灵，恭请择选社长与祭祀贡品，即可上香祭拜。`);
         }
 
         // 一键祭拜核心逻辑
         function worship() {
             // 双重校验，确保选了帝王和祭品
             if (gameData.selectedEmperors.length === 0 || !gameData.selectedSacrifice) {
-                showBlessing('请先择选先王灵位，再挑选祭祀贡品，方可祭拜！');
+                showBlessing('请先择选社长，再挑选祭祀贡品，方可祭拜！');
                 return;
             }
 
@@ -769,7 +769,7 @@
             updateUI();
 
             // 生成祭拜结果文本
-            let blessingText = `祭拜成功！恭献${gameData.selectedSacrifice.name}，先王好感度+${addFavor}！\n\n`;
+            let blessingText = `祭拜成功！恭献${gameData.selectedSacrifice.name}，社长好感度+${addFavor}！\n\n`;
             let hasBlessing = false;
 
             // 遍历所有选中的帝王，每个都有概率出赐福
@@ -781,13 +781,13 @@
                     const blessings = emperorBlessings[emperorName] || emperorBlessings.default;
                     // 随机选一句赠语
                     const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
-                    blessingText += `✨ 获${emperorName}先王赐福：\n「${randomBlessing}」\n\n`;
+                    blessingText += `✨ 获${emperorName}社长赐福：\n「${randomBlessing}」\n\n`;
                 }
             });
 
             // 如果没有任何帝王赐福，显示提示
             if (!hasBlessing) {
-                blessingText += `（今日诸位先王未显灵，提升好感度可大幅提高获赐福概率）`;
+                blessingText += `（今日诸位社长未显灵，提升好感度可大幅提高获赐福概率）`;
             }
 
             // 显示最终结果
@@ -809,3 +809,4 @@
 </body>
 
 </html>
+
