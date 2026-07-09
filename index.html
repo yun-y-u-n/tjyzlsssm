@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天津一中历史社宗庙</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        body {
+            background: url('https://picsum.521120.xyz/id/106/1920/1080') center/cover no-repeat fixed;
+            min-height: 100vh;
+            position: relative;
+            color: #e6b800;
+            padding: 2rem 1rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 30, 0.88);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            border-bottom: 3px solid #e6b800;
+            padding-bottom: 1rem;
+            letter-spacing: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            letter-spacing: 0.2rem;
+        }
+        
+        .info-panel {
+            background: rgba(230, 184, 0, 0.12);
+            border: 1px solid #e6b800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem auto;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
+        }
+
+        .info-item {
+            margin: 0.5rem 1rem;
+        }
+
+        .info-label {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-top: 0.3rem;
+            color: #ffd700;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #8b0000 0%, #b22222 50%, #dc143c 100%);
+            color: #fff;
+            border: 2px solid #e6b800;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220, 20, 60, 0.5);
+            border-color: #ffd700;
+        }
+
+        .btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: #666;
+            opacity: 0.7;
+        }
+        
+        .btn-clear {
+            background: linear-gradient(135deg, #5c0000 0%, #8b0000 50%, #a52a2a 100%);
+        }
+
+        .ancestral-hall {
+            margin: 3rem 0;
+        }
+
+        .hall-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            border-left: 4px solid #e6b800;
+            border-right: 4px solid #e6b800;
+            display: inline-block;
+            padding: 0 2rem;
+        }
+
+        .spirit-tablets {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 0 auto;
+        }
+
+        .tablet {
+            background: linear-gradient(180deg, #2c0c0c 0%, #1a0505 100%);
+            border: 2px solid #b8860b;
+            border-radius: 8px;
+            padding: 1rem 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tablet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, #e6b800 50%, transparent 100%);
+        }
+
+        .tablet:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(230, 184, 0, 0.4);
+        }
+
+        .tablet.selected {
+            background: linear-gradient(180deg, #4a0a0a 0%, #2d0505 100%);
+            border-color: #ffd700;
+            box-shadow: 0 0 25px rgba(230, 184, 0, 0.6);
+        }
+
+        .emperor-avatar {
+            width: 100px;
+            height: 130px;
+            object-fit: cover;
+            border: 2px solid #b8860b;
+            border-radius: 4px;
+            margin: 0 auto 0.8rem;
+            display: block;
+            background: #111;
+        }
+
+        .emperor-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #ffd700;
+        }
+
+        .emperor-name {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .emperor-reign {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .intro-section {
+            background: rgba(230, 184, 0, 0.12);
+            border: 1px solid #e6b800;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            backdrop-filter: blur(5px);
+        }
+
+        .intro-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .intro-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid #b8860b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .intro-card .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(230, 184, 0, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .intro-card .card-reign {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .intro-card .card-intro {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .empty-tip {
+            opacity: 0.7;
+            font-size: 1rem;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .sacrifice-section {
+            background: rgba(230, 184, 0, 0.12);
+            border: 1px solid #e6b800;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.2rem;
+        }
+
+        .sacrifice-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sacrifice-option {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid #e6b800;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sacrifice-option:hover {
+            background: rgba(230, 184, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .sacrifice-option.selected {
+            background: rgba(230, 184, 0, 0.3);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(230, 184, 0, 0.5);
+        }
+
+        .sacrifice-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #b8860b;
+            background: #111;
+        }
+
+        .sacrifice-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .sacrifice-desc {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .blessing-box {
+            background: rgba(230, 184, 0, 0.15);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            backdrop-filter: blur(5px);
+            white-space: pre-line;
+        }
+
+        .blessing-box.show {
+            opacity: 1;
+        }
+
+        .blessing-text {
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 0.2rem;
+            }
+            .hall-title {
+                font-size: 1.5rem;
+            }
+            .spirit-tablets {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+            .emperor-avatar {
+                width: 80px;
+                height: 100px;
+            }
+            .sacrifice-options {
+                grid-template-columns: 1fr 1fr;
+            }
+            .intro-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> 天津一中历史社宗庙 </h1>
+        <p class="subtitle">社虽旧制，其命惟新。往者不谏，来者可追。冀我社人，鉴史明心，踵事增华，永续辉光。</p>
+        
+        <div class="info-panel">
+            <div class="info-item">
+                <div class="info-label">社长好感度</div>
+                <div class="info-value" id="favorability">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">上次签到</div>
+                <div class="info-value" id="lastSign">未签到</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">当前祭拜</div>
+                <div class="info-value" id="selectedEmperor">未选择</div>
+            </div>
+        </div>
+
+        <button class="btn" id="signBtn">每日签到 领太牢礼</button>
+        <button class="btn btn-clear" id="clearBtn">一键清空选中</button>
+
+        <div class="ancestral-hall">
+            <h2 class="hall-title">历任社长</h2>
+            <p style="opacity:0.8; margin-bottom:1rem;">点击可多选，再次点击取消选中</p>
+            <div class="spirit-tablets" id="tabletsContainer"></div>
+        </div>
+
+        <div class="intro-section" id="introSection">
+            <h2 class="section-title">选中社长主要功绩</h2>
+            <div class="intro-container" id="introContainer">
+                <p class="empty-tip">请择选社长，即可查看其主要功绩</p>
+            </div>
+        </div>
+
+        <div class="sacrifice-section">
+            <h2 class="section-title">选择祭祀贡品</h2>
+            <div class="sacrifice-options">
+                <div class="sacrifice-option" data-value="tailao" data-favor="15">
+                    <div class="sacrifice-name">太牢之礼</div>
+                    <div class="sacrifice-desc">牛、羊、豕三牲全备，社长祭祀最高礼</div>
+                </div>
+                <div class="sacrifice-option" data-value="shaolao" data-favor="10">
+                    <div class="sacrifice-name">少牢之礼</div>
+                    <div class="sacrifice-desc">羊、豕二牲，诸侯卿大夫祭祀礼</div>
+                </div>
+                <div class="sacrifice-option" data-value="grain" data-favor="5">
+                    <div class="sacrifice-name">五谷之礼</div>
+                    <div class="sacrifice-desc">稻、黍、稷、麦、菽，民生之本</div>
+                </div>
+                <div class="sacrifice-option" data-value="jade" data-favor="8">
+                    <div class="sacrifice-name">玉帛之礼</div>
+                    <div class="sacrifice-desc">瑞玉、束帛，祭祀之瑞器</div>
+                </div>
+            </div>
+            <button class="btn" id="worshipBtn" disabled>一键祭拜选中社长</button>
+        </div>
+
+        <div class="blessing-box" id="blessingBox">
+            <div class="blessing-text" id="blessingText">恭请先择选社长，再挑选祭祀贡品，即可上香祭拜，获社长赐福</div>
+        </div>
+    </div>
+
+    <script>
+
+        const emperors = [
+            {
+                templeName: "高祖",
+                name: "彭宇程",
+                reign: "2022~2023",
+                avatar: "高祖.png",
+                intro: "联合骨干创立历史社，完成首轮纳新，汇聚 108 名成员；创办社团公众号，借义卖、百团大战打响社团知名度，开创跨校论史活动。"
+            },
+            {
+                templeName: "太宗",
+                name: "李治衡",
+                reign: "2023~2024",
+                avatar: "太宗.png",
+                intro: "接任后搭建官方纳新群与 QQ 社群，完成新一轮纳新扩充社团规模；百团大战策划三国情景剧大幅提升社团声量，打造爆款历史主题文创，义卖成果丰硕。"
+            },
+            {
+                templeName: "高宗",
+                name: "安登宸",
+                reign: "2024~2025",
+                avatar: "高宗.png",
+                intro: "完成巡班宣化与纳新工作，吸纳新生力量；创新推出商鞅变法魔方文创，延续义卖特色充实社费；常态化举办历史主题研讨，营造浓厚研史氛围。"
+            },
+            {
+                templeName: "世祖",
+                name: "徐庆哲",
+                reign: "2025~2026",
+                avatar: "世祖.png",
+                intro: "临危受命复兴历史社，纳新破历代纪录；创办三十年战争桌游、明史社课；编排《大明王朝 1566》戏剧；完善官制，修撰社史，重振社内文风与秩序。"
+            },
+        ];
+
+        const emperorBlessings = {
+            /*"彭宇程": [
+                
+            ],
+            "李治衡": [
+                
+            ],
+            "安登宸": [
+                
+            ],*/
+            "default": [
+                "长江后浪推前浪，浮事新人换旧人。",
+                "天行健，君子以自强不息；地势坤，君子以厚德载物。",
+                "见贤思齐焉，见不贤而内自省也。",
+                "书山有路勤为径，学海无涯苦作舟。",
+                "宝剑锋从磨砺出，梅花香自苦寒来。",
+                "千磨万击还坚劲，任尔东西南北风。"
+            ]
+        };
+
+        let gameData = {
+            favorability: 0, // 全局好感度
+            lastSignDate: '', // 上次签到日期
+            selectedEmperors: [], // 选中的社长数组
+            selectedSacrifice: null // 选中的祭品
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('signBtn').addEventListener('click', dailySign);
+            document.getElementById('clearBtn').addEventListener('click', clearSelection);
+            document.getElementById('worshipBtn').addEventListener('click', worship);
+            renderTablets();
+            bindSacrificeClick();
+            updateUI();
+            updateIntroPanel();
+            checkSignStatus();
+        });
+
+        function renderTablets() {
+            const container = document.getElementById('tabletsContainer');
+            let html = '';
+            
+            emperors.forEach(emperor => {
+                const isSelected = gameData.selectedEmperors.includes(emperor.name);
+                html += `
+                <div class="tablet ${isSelected ? 'selected' : ''}" data-emperor="${emperor.name}">
+                    <img src="${emperor.avatar}" alt="${emperor.templeName}${emperor.name}" class="emperor-avatar" onerror="this.src='https://picsum.521120.xyz/id/1024/100/130'">
+                    <div class="emperor-title">${emperor.templeName}</div>
+                    <div class="emperor-name">${emperor.name}</div>
+                    <div class="emperor-reign">${emperor.reign}</div>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+            document.querySelectorAll('.tablet').forEach(tablet => {
+                tablet.addEventListener('click', function() {
+                    selectEmperor(this);
+                });
+            });
+        }
+        // 社长多选逻辑
+        function selectEmperor(element) {
+            const emperorName = element.dataset.emperor;
+            const isSelected = element.classList.contains('selected');
+            if (isSelected) {
+                element.classList.remove('selected');
+                gameData.selectedEmperors = gameData.selectedEmperors.filter(name => name !== emperorName);
+            } else {
+                element.classList.add('selected');
+                gameData.selectedEmperors.push(emperorName);
+            }
+            updateIntroPanel();
+            updateUI();
+        }
+        // 更新社长简介面板
+        function updateIntroPanel() {
+            const introContainer = document.getElementById('introContainer');
+            const selectedEmperors = gameData.selectedEmperors;
+            if (selectedEmperors.length === 0) {
+                introContainer.innerHTML = `<p class="empty-tip">请择选社长，即可查看其主要功绩</p>`;
+                return;
+            }
+            let html = '';
+            selectedEmperors.forEach(emperorName => {
+                const emperor = emperors.find(item => item.name === emperorName);
+                if (!emperor) return; // 找不到就跳过
+                html += `
+                <div class="intro-card">
+                    <div class="card-title">${emperor.templeName} · ${emperor.name}</div>
+                    <div class="card-reign">在位时间：${emperor.reign}</div>
+                    <div class="card-intro">${emperor.intro}</div>
+                </div>
+                `;
+            });
+            introContainer.innerHTML = html;
+        }
+        function bindSacrificeClick() {
+            document.querySelectorAll('.sacrifice-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectSacrifice(this);
+                });
+            });
+        }
+        // 选择祭品逻辑
+        function selectSacrifice(element) {
+            document.querySelectorAll('.sacrifice-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            gameData.selectedSacrifice = {
+                value: element.dataset.value,
+                favor: parseInt(element.dataset.favor) || 0,
+                name: element.querySelector('.sacrifice-name').textContent
+            };
+            updateUI();
+        }
+        // 一键清空选中内容
+        function clearSelection() {
+            gameData.selectedEmperors = [];
+            gameData.selectedSacrifice = null;
+            document.querySelectorAll('.tablet').forEach(tablet => {
+                tablet.classList.remove('selected');
+            });
+            document.querySelectorAll('.sacrifice-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            updateIntroPanel();
+            updateUI();
+            showBlessing('已清空选中的社长与祭品，请重新择选。');
+        }
+
+        // 更新页面UI显示
+        function updateUI() {
+            document.getElementById('favorability').textContent = gameData.favorability;
+            document.getElementById('lastSign').textContent = gameData.lastSignDate || '未签到';
+            document.getElementById('selectedEmperor').textContent = gameData.selectedEmperors.length > 0 
+                ? `已选${gameData.selectedEmperors.length}位社长` 
+                : '未选择';
+            const worshipBtn = document.getElementById('worshipBtn');
+            const canWorship = !!(gameData.selectedEmperors.length > 0 && gameData.selectedSacrifice);
+            worshipBtn.disabled = !canWorship;
+        }
+
+        // 检查签到状态
+        function checkSignStatus() {
+            const today = new Date().toDateString();
+            const signBtn = document.getElementById('signBtn');
+            if (gameData.lastSignDate === today) {
+                signBtn.disabled = true;
+                signBtn.textContent = '今日已签到';
+            } else {
+                signBtn.disabled = false;
+                signBtn.textContent = '每日签到 领太牢礼';
+            }
+        }
+
+        // 每日签到功能
+        function dailySign() {
+            const today = new Date().toDateString();
+            if (gameData.lastSignDate === today) return;
+            gameData.lastSignDate = today;
+            gameData.favorability += 10;
+            updateUI();
+            checkSignStatus();
+            showBlessing(`签到成功！获赠太牢之礼，社长好感度+10！\n\n心诚则灵，恭请择选社长与祭祀贡品，即可上香祭拜。`);
+        }
+
+        // 一键祭拜核心逻辑
+        function worship() {
+            if (gameData.selectedEmperors.length === 0 || !gameData.selectedSacrifice) {
+                showBlessing('请先择选社长，再挑选祭祀贡品，方可祭拜！');
+                return;
+            }
+            const addFavor = gameData.selectedSacrifice.favor;
+            gameData.favorability += addFavor;
+            const baseProbability = 0.1;
+            const maxProbability = 0.9;
+            const probability = Math.min(baseProbability + (gameData.favorability / 600), maxProbability);
+            updateUI();
+            let blessingText = `祭拜成功！恭献${gameData.selectedSacrifice.name}，社长好感度+${addFavor}！\n\n`;
+            let hasBlessing = false;
+            gameData.selectedEmperors.forEach(emperorName => {
+                const getBlessing = Math.random() < probability;
+                if (getBlessing) {
+                    hasBlessing = true;
+                    const blessings = emperorBlessings[emperorName] || emperorBlessings.default;
+                    const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
+                    blessingText += `✨ 获${emperorName}社长赐福：\n「${randomBlessing}」\n\n`;
+                }
+            });
+            if (!hasBlessing) {
+                blessingText += `（今日诸位社长未显灵，提升好感度可大幅提高获赐福概率）`;
+            }
+            showBlessing(blessingText);
+        }
+
+        // 展示祝福文本
+        function showBlessing(text) {
+            const box = document.getElementById('blessingBox');
+            const textEl = document.getElementById('blessingText');
+            box.classList.remove('show');
+            setTimeout(() => {
+                textEl.textContent = text;
+                box.classList.add('show');
+            }, 200);
+        }
+    </script>
+</body>
+
+</html>
